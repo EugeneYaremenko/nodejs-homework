@@ -1,4 +1,4 @@
-const contacts = require("../models/contacts.json");
+const contacts = require("../db/contacts.json");
 const Joi = require("joi");
 const NotFoundError = require("../errors/NotFoundError");
 
@@ -45,6 +45,18 @@ class ContactsController {
   };
 
   updateContact = (req, res) => {
+    const validationRules = Joi.object({
+      name: Joi.string(),
+      email: Joi.string(),
+      phone: Joi.string(),
+    });
+
+    const validationResult = validationRules.validate(req.body);
+
+    if (validationResult.error) {
+      return res.status(400).send({ message: "missing required name field" });
+    }
+
     const contactIndex = this.validateContactById(req.params);
 
     if (contactIndex === -1) {
