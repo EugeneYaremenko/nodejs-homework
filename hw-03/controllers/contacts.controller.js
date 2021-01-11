@@ -99,7 +99,6 @@ class ContactsController {
       phone: Joi.string().required(),
       subscription: Joi.string().required(),
       password: Joi.string().required(),
-      token: Joi.string().required(),
     });
 
     const validationResult = validationRules.validate(req.body);
