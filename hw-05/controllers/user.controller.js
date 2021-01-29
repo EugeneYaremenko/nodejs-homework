@@ -24,14 +24,14 @@ class UserController {
 
       const existingUser = await userModel.findUserByEmail(email);
 
-      const generator = new AvatarGenerator();
-      const userAvatar = await generator.generateRandomAvatar();
-
       if (existingUser) {
         return res
           .status(400)
           .send({ message: "User with such email already exists" });
       }
+
+      const generator = new AvatarGenerator();
+      const userAvatar = await generator.generateRandomAvatar();
 
       const user = await userModel.create({
         username,
